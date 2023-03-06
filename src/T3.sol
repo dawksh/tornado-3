@@ -2,6 +2,8 @@
 pragma solidity ^0.8.13;
 
 contract T3 {
+    event Deployed(address indexed caller, uint256 salt, address precompute);
+
     function getAddress(bytes memory bytecode, uint256 _salt)
         public
         view
@@ -34,5 +36,7 @@ contract T3 {
                 revert(0, 0)
             }
         }
+
+        emit Deployed(msg.sender, _salt, addr);
     }
 }
