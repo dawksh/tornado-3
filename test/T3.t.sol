@@ -8,8 +8,6 @@ import "../src/T3.sol";
 contract CounterTest is Test {
     T3 public t3;
 
-    T3Init public init = new T3Init(address(this));
-
     function setUp() external {
         t3 = new T3();
     }
