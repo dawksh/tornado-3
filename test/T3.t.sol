@@ -12,12 +12,21 @@ contract CounterTest is Test {
         t3 = new T3();
     }
 
-    function testAddress() external {
+    function testAddressComputation() external view {
+        bytes memory deploymentCode = abi.encodePacked(
+            type(T3Init).creationCode,
+            abi.encode(address(this))
+        );
+        address deploymentAddress = t3.getAddress(deploymentCode, 269);
+        assert(deploymentAddress != address(0));
+    }
+
+    function testAddressDeployment() external {
         bytes memory deploymentCode = abi.encodePacked(
             type(T3Init).creationCode,
             address(this)
         );
         address deploymentAddress = t3.getAddress(deploymentCode, 269);
-        assert(deploymentAddress != address(0));
+        assert(deploymentAddress != t3.deploy(269));
     }
 }

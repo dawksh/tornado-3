@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
+import "./T3Init.sol";
+
 contract T3 {
     event Deployed(address indexed caller, uint256 salt, address precompute);
 
@@ -21,22 +23,9 @@ contract T3 {
         return address(uint160(uint256(hash)));
     }
 
-    function deploy(bytes memory bytecode, uint256 _salt) public payable {
-        address addr;
-
-        assembly {
-            addr := create2(
-                callvalue(),
-                add(bytecode, 0x20),
-                mload(bytecode),
-                _salt
-            )
-
-            if iszero(extcodesize(addr)) {
-                revert(0, 0)
-            }
-        }
-
-        emit Deployed(msg.sender, _salt, addr);
+    function deploy(uint256 salt) public payable returns (address) {
+        address addr = address(new T3Init{salt: bytes32(salt)}(msg.sender));
+        emit Deployed(msg.sender, salt, addr);
+        return addr;
     }
 }
