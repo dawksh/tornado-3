@@ -1,0 +1,3 @@
+CounterTest:testAddressComputation() (gas: 19531)
+CounterTest:testAddressDeployment() (gas: 59550)
+CounterTest:testSendingFunds() (gas: 94007)
