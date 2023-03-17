@@ -33,4 +33,10 @@ contract CounterTest is Test {
         t3.deploy(269);
         assertEq(bal + 1 ether, address(this).balance);
     }
+
+    function testInvalidAddress() external {
+        address preCompute = t3.getAddress(deploymentCode, 269);
+        address deployed = t3.deploy(270);
+        assert(preCompute != deployed);
+    }
 }
