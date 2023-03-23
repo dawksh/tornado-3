@@ -8,8 +8,7 @@ import "../src/T3.sol";
 contract CounterTest is Test {
     T3 public t3;
 
-    bytes deploymentCode =
-        abi.encodePacked(type(T3Init).creationCode, abi.encode(address(this)));
+    bytes deploymentCode = abi.encodePacked(type(T3Init).creationCode, abi.encode(address(this)));
 
     function setUp() external {
         t3 = new T3();
@@ -27,7 +26,7 @@ contract CounterTest is Test {
 
     function testSendingFunds() external {
         address preCompute = t3.getAddress(deploymentCode, 269);
-        (bool s, ) = address(preCompute).call{value: 1 ether}("");
+        (bool s,) = address(preCompute).call{value: 1 ether}("");
         require(s);
         uint256 bal = address(this).balance;
         t3.deploy(269);
